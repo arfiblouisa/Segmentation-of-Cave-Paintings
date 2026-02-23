@@ -47,8 +47,6 @@ The goal of this project is to provide:
 
 Below is a description of the main files and directories:
 
-### File Description
-
 - **main.py**  
   Entry point for running the full segmentation pipeline.
 
@@ -80,11 +78,50 @@ Below is a description of the main files and directories:
 
 ## Installation
 
+We advise you to use Conda for this project. If you intend to run the SAM notebook, you will need to have :
+- Python 3.12 or higher
+- PyTorch 2.7 or higher
+- CUDA-compatible GPU with CUDA 12.6 or higher
+
+
+1. **Create a new Conda environment:**
+
+```bash
+conda create -n seg_cave_env python=3.12
+conda activate seg_cave_env
+```
+
+2. **Optional : Install PyTorch with CUDA support:**
+If you don't intend to re-run the SAM notebook, pythorch isn't needed.
+```bash
+pip install torch==2.7.0 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
+```
+
+3. **Clone the repository and install the package:**
+
+Clone our repository :
 ```bash
 git clone https://github.com/arfiblouisa/Segmentation-of-Cave-Paintings
 cd Segmentation-of-Cave-Paintings
 pip install -r requirements.txt
 ```
+
+Clone SAM3 repository :
+```bash
+git clone https://github.com/facebookresearch/sam3.git
+cd sam3
+pip install -e .
+```
+Install additional SAM dependencies:
+```bash
+# For running example notebooks
+pip install -e ".[notebooks]"
+```
+
+⚠️ Before using SAM 3, you need to request access to the checkpoints on the SAM 3
+Hugging Face [repo](https://huggingface.co/facebook/sam3). Once accepted, you
+need to be authenticated to download the checkpoints. You can do this by running
+the following [steps](https://huggingface.co/docs/huggingface_hub/en/quick-start#authentication).
 
 ## Usage :
 ```bash
@@ -101,6 +138,6 @@ python main.py --input path/to/image.jpg --output results/
 
 ## Contact
 
-For questions or collaborations, please contact:
-Louisa Arfib : louisa.arfib@student-cs.fr
+For questions or collaborations, please contact:  
+Louisa Arfib : louisa.arfib@student-cs.fr  
 Manon Arfib : manon.arfib@student-cs.fr

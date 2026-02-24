@@ -1,0 +1,9 @@
+README.md
+pyproject.toml
+src/seg_cave_paintings/meanshift.py
+src/seg_cave_paintings/preprocessing_utils.py
+src/seg_cave_paintings/preprocessing_utils_manon.py
+src/seg_cave_paintings.egg-info/PKG-INFO
+src/seg_cave_paintings.egg-info/SOURCES.txt
+src/seg_cave_paintings.egg-info/dependency_links.txt
+src/seg_cave_paintings.egg-info/top_level.txt

@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: seg_cave_paintings
+Version: 0.1.0
+Summary: Useful functions for segmentation of cave paintings, including preprocessing steps and implementation of Otsu thresholding, Meanshift, and active contours methods.
+Author: Manon Arfib, Louisa Arfib

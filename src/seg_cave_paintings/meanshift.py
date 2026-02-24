@@ -51,34 +51,43 @@ def apply_meanshift(img, spatial_radius, color_radius):
     result = segmented.copy()
     result[boundaries == 255] = 0
 
-    return segmented, result, len(np.unique(labels))
+    return labels_img, segmented, result
 
 
 def create_regions_image(img, k_s=80, k_r=24, save_path=None):
 
-    h,w,_=img.shape
-    k_s=k_s*(np.sqrt((h*w)/136000))
+    h, w, _ = img.shape
+    k_s = k_s * (np.sqrt((h * w) / 136000))
 
-    segmented, result, nb_regions = apply_meanshift(img, spatial_radius=k_s, color_radius=k_r)
+    labels_img, segmented, result = apply_meanshift(
+        img,
+        spatial_radius=k_s,
+        color_radius=k_r
+    )
+
     segmented_rgb = cv2.cvtColor(segmented, cv2.COLOR_LAB2RGB)
 
-    pixels = segmented_rgb.reshape(-1, 3)
-    unique_colors = np.unique(pixels, axis=0)
+    unique_labels = np.unique(labels_img)
 
     plt.figure(figsize=(10, 8))
     plt.imshow(segmented_rgb)
     plt.axis("off")
 
-    # Create legend elements (small colored dots)
     legend_elements = []
-    for i, color in enumerate(unique_colors):
+
+    for lab in unique_labels:
+        mask = labels_img == lab
+
+        # Compute mean color of this region
+        mean_color = segmented_rgb[mask].mean(axis=0)
+
         legend_elements.append(
             Line2D(
                 [0], [0],
                 marker='o',
                 color='w',
-                label=f"Region {i+1}",
-                markerfacecolor=color/255,
+                label=f"Region {lab}",
+                markerfacecolor=mean_color / 255,
                 markersize=8
             )
         )
@@ -86,22 +95,24 @@ def create_regions_image(img, k_s=80, k_r=24, save_path=None):
     plt.legend(handles=legend_elements, loc="upper right")
 
     if save_path is not None:
-        plt.savefig(save_path+'_best_regions.png', bbox_inches='tight', pad_inches=0)
+        plt.savefig(save_path + '_best_regions.png',
+                    bbox_inches='tight',
+                    pad_inches=0)
+
     plt.show()
     plt.close()
 
-    return unique_colors, segmented_rgb
+    return labels_img, segmented_rgb
 
 
-def create_segmentation_results(regions_to_merge, unique_colors, segmented_rgb, img, save_path=None):
-
-    selected_colors = unique_colors[regions_to_merge]
-
-    mask = np.zeros(segmented_rgb.shape[:2], dtype=bool)
-
-    for color in selected_colors:
-        mask |= np.all(segmented_rgb == color, axis=-1)
-
+def create_segmentation_results(
+        regions_to_merge,
+        labels_img,
+        img,
+        save_path=None
+):
+    # Create binary mask from selected labels
+    mask = np.isin(labels_img, list(regions_to_merge))
 
     original_rgb = cv2.cvtColor(img, cv2.COLOR_LAB2RGB)
     overlay = original_rgb.copy()
@@ -117,7 +128,13 @@ def create_segmentation_results(regions_to_merge, unique_colors, segmented_rgb, 
     plt.figure(figsize=(10, 8))
     plt.imshow(overlay)
     plt.axis("off")
+
     if save_path is not None:
-        plt.savefig(save_path+'_segmentation_results.png', bbox_inches='tight', pad_inches=0)
+        plt.savefig(save_path + '_segmentation_results.png',
+                    bbox_inches='tight',
+                    pad_inches=0)
+
     plt.show()
     plt.close()
+
+    return mask

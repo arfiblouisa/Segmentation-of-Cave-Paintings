@@ -47,32 +47,22 @@ The goal of this project is to provide:
 
 Below is a description of the main files and directories:
 
-- **main.py**  
-  Entry point for running the full segmentation pipeline.
+- **dataset**
+  49 cave paintings images that can be used to test the codes. All images can be used and cited using the *infos.txt* files to correctly cite the authors. 
 
-- **segmentation/preprocessing.py**  
-  Color space conversion and luminance extraction.
+- **src/seg_cave_paintings**
+  All the utils functions used to segment the painting of interest. They are called in *demo_notebooks* and *full_interactive_pipeline*.
 
-- **segmentation/otsu_threshold.py**  
-  Implementation of Otsu’s automatic threshold selection.
+- **demo_notebooks**
+  Jupyter notebooks to test the three methods described in the article : Otsu, active conctours and meanshift. 
+  *get_rectangles_coordinates.py* permits the user to get the bounding box coordinates of the object they want to segment.
 
-- **segmentation/postprocessing.py**  
-  Morphological operations and mask refinement.
+- **SAM**
+  Repository to experiment with SAM3 model. A selection of pictures from *./dataset/* are available in *./SAM/prompt_dataset* to experiment, but other images can be used. 
+  *./SAM/SAM3_prompt_experiments.ipynb* should be used to generate the segmentation masks.
 
-- **segmentation/utils.py**  
-  Utility functions for visualization and input/output operations.
-
-- **data/raw/**  
-  Original input images.
-
-- **data/processed/**  
-  Intermediate processed data.
-
-- **results/**  
-  Output segmentation masks and evaluation results.
-
-- **requirements.txt**  
-  Python dependencies required to run the project.
+- **preprocessing_comparisons**
+  Comparisons of different preprocessing methods ono different types of cave paintings (charcoal, red, and both charcoal and red). The different results are presented under .png format.
 
 ---
 

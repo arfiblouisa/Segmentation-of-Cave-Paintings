@@ -1,8 +1,8 @@
 import cv2
 
-# ==============================
-# Variables globales pour la souris
-# ==============================
+#Allows you to get the coordinates of bounding boxes drawn on images.
+# Usage: write the path of the images you want to annotate in the "image_paths" list and run the script. Click and drag on the image to draw rectangles. The coordinates of each rectangle will be printed in the console. Press ENTER to move to the next image or ESC to skip.
+
 drawing = False
 x_start, y_start = -1, -1
 x_end, y_end = -1, -1

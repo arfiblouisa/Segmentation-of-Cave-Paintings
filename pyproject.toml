@@ -9,4 +9,10 @@ description = "Useful functions for segmentation of cave paintings, including pr
 authors = [
   {name = "Manon Arfib, Louisa Arfib"}
 ]
-dependencies = []
+dependencies = [
+  "opencv-python",
+  "numpy",
+  "matplotlib",
+  "scipy",
+  "scikit-learn"
+]
